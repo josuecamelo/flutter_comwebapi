@@ -15,8 +15,9 @@ class TransactionWebClient{
   }
 
   Future<Transaction> save(Transaction transaction) async {
-    Map<String, dynamic> transactionMap = _topMap(transaction);
-    final String transactionJson = jsonEncode(transactionMap);
+    //Map<String, dynamic> transactionMap = _topMap(transaction);
+    //final String transactionJson = jsonEncode(transactionMap);
+    final String transactionJson = jsonEncode(transaction.toJson());
 
     final Response response = await client.post(baseUrl, headers: {
       'Content-type': 'application/json',
@@ -30,7 +31,7 @@ class TransactionWebClient{
     final List<dynamic> decodeJson = jsonDecode(response.body);
     final List<Transaction> transactions = List();
     for (Map<String, dynamic> transactionJson in decodeJson) {
-      final Map<String, dynamic> contactJson = transactionJson['contact'];
+      /*final Map<String, dynamic> contactJson = transactionJson['contact'];
       final Transaction transaction = Transaction(
           transactionJson['value'],
           Contact(
@@ -38,32 +39,36 @@ class TransactionWebClient{
             contactJson['name'],
             contactJson['accountNumber'],
           ));
-      transactions.add(transaction);
+      transactions.add(transaction);*/
+
+      transactions.add(Transaction.fromJson(transactionJson));
     }
     return transactions;
   }
 
   Transaction _toTransaction(Response response) {
      Map<String, dynamic> json = jsonDecode(response.body);
-    final Map<String, dynamic> contactJson = json['contact'];
-    return Transaction(
-      json['value'],
-      Contact(
-        0,
-        contactJson['name'],
-        contactJson['accountNumber'],
-      ),
-    );
+    // final Map<String, dynamic> contactJson = json['contact'];
+    // return Transaction(
+    //   json['value'],
+    //   Contact(
+    //     0,
+    //     contactJson['name'],
+    //     contactJson['accountNumber'],
+    //   ),
+    // );
+
+    return Transaction.fromJson(json);
   }
 
-  Map<String, dynamic> _topMap(Transaction transaction) {
-    final Map<String, dynamic> transactionMap = {
-      'value' : transaction.value,
-      'contact' : {
-        'name' : transaction.contact.name,
-        'accountNumber' : transaction.contact.accountNumber
-      }
-    };
-    return transactionMap;
-  }
+  // Map<String, dynamic> _topMap(Transaction transaction) {
+  //   final Map<String, dynamic> transactionMap = {
+  //     'value' : transaction.value,
+  //     'contact' : {
+  //       'name' : transaction.contact.name,
+  //       'accountNumber' : transaction.contact.accountNumber
+  //     }
+  //   };
+  //   return transactionMap;
+  // }
 }

@@ -13,4 +13,13 @@ class Transaction {
   String toString() {
     return 'Transaction{value: $value, contact: $contact}';
   }
+
+  Map<String, dynamic> toJson() => {
+    'value': value,
+    'contact': contact.toJson()
+  };
+
+  Transaction.fromJson(Map<String, dynamic> json):
+      value = json['value'],
+      contact = Contact.fromJson(json['contact']);
 }
