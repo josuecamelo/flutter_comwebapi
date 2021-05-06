@@ -1,4 +1,5 @@
 import 'package:bytebankbd/database/app_database.dart';
+import 'package:bytebankbd/http/webclient.dart';
 import 'package:bytebankbd/models/contact.dart';
 import 'package:bytebankbd/screens/contact_form.dart';
 import 'package:bytebankbd/screens/contacts_list.dart';
@@ -17,6 +18,7 @@ void main() {
   // save(Contact(0, getRandomString(new Random().nextInt(50) + 10), 1001)).then((id){
   //   findAll().then((contacts) => debugPrint(contacts.toString()));
   // });
+  findAll();
 }
 
 class BytebankApp extends StatelessWidget {
