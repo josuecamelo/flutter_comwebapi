@@ -11,7 +11,7 @@ Future<List<Transaction>> findAll() async {
   ]);
 
   final Response response =
-      await client.get('http://192.168.0.7:8080/transactions');
+      await client.get('http://192.168.0.70:8080/transactions').timeout(Duration(seconds: 5));
 
   //CONVERSÃO DA RESPOSTA - STRING JSON CONVERTER PARA OBJETO DO DART
   final List<dynamic> decodeJson = jsonDecode(response.body);
@@ -35,10 +35,10 @@ class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
     //print(data.toString());
-    /*print('REQUISIÇÃO');
+    print('REQUISIÇÃO');
     print('URL: ${data.url}');
     print('HEADERS: ${data.headers}');
-    print('BODY: ${data.body}');*/
+    print('BODY: ${data.body}');
     return data;
   }
 
