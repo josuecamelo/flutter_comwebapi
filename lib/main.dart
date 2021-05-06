@@ -1,11 +1,14 @@
 import 'package:bytebankbd/database/app_database.dart';
 import 'package:bytebankbd/http/webclient.dart';
 import 'package:bytebankbd/models/contact.dart';
+import 'package:bytebankbd/models/transaction.dart';
 import 'package:bytebankbd/screens/contact_form.dart';
 import 'package:bytebankbd/screens/contacts_list.dart';
 import 'package:bytebankbd/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(BytebankApp());
@@ -18,6 +21,7 @@ void main() {
   // save(Contact(0, getRandomString(new Random().nextInt(50) + 10), 1001)).then((id){
   //   findAll().then((contacts) => debugPrint(contacts.toString()));
   // });
+  save(Transaction(500.0, Contact(0, 'Tio', 9000))).then((transaction) => print('new transaction $transaction'));
   findAll().then((transactions) => print('new transactions $transactions'));
 }
 
