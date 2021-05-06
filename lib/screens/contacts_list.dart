@@ -17,7 +17,7 @@ class _ContactListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Contatos')),
+      appBar: AppBar(title: Text('Transfer')),
       body: FutureBuilder<List<Contact>>(
         initialData: List(),
         //é uma lista de contatos FutureBuilder<List<Contact>>
