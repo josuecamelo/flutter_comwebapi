@@ -1,3 +1,4 @@
+import 'package:bytebankbd/components/progress.dart';
 import 'package:bytebankbd/database/app_database.dart';
 import 'package:bytebankbd/database/dao/contact_dao.dart';
 import 'package:bytebankbd/models/contact.dart';
@@ -28,13 +29,7 @@ class _ContactListState extends State<ContactsList> {
               break;
             case ConnectionState
                 .waiting: //verificando que está em execução nao foi finalizado
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [CircularProgressIndicator(), Text('Loading..')],
-                ),
-              );
+              return Progress();
               break;
             case ConnectionState
                 .active: //trazer pedação de uma carregamento async

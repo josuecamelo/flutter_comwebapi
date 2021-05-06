@@ -18,7 +18,7 @@ void main() {
   // save(Contact(0, getRandomString(new Random().nextInt(50) + 10), 1001)).then((id){
   //   findAll().then((contacts) => debugPrint(contacts.toString()));
   // });
-  findAll();
+  findAll().then((transactions) => print('new transactions $transactions'));
 }
 
 class BytebankApp extends StatelessWidget {

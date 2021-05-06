@@ -1,31 +1,53 @@
+import 'dart:convert';
+
+import 'package:bytebankbd/models/contact.dart';
+import 'package:bytebankbd/models/transaction.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
-void findAll() async{
+Future<List<Transaction>> findAll() async {
   final Client client = HttpClientWithInterceptor.build(interceptors: [
     LoggingInterceptor(),
   ]);
 
-  final Response response = await client.get('http://192.168.0.7:8080/transactions');
+  final Response response =
+      await client.get('http://192.168.0.7:8080/transactions');
+
+  //CONVERSÃO DA RESPOSTA - STRING JSON CONVERTER PARA OBJETO DO DART
+  final List<dynamic> decodeJson = jsonDecode(response.body);
+  final List<Transaction> transactions = List();
+  for (Map<String, dynamic> transactionJson in decodeJson) {
+    final Map<String, dynamic> contactJson = transactionJson['contact'];
+    final Transaction transaction = Transaction(
+        transactionJson['value'],
+        Contact(
+          0,
+          contactJson['name'],
+          contactJson['accountNumber'],
+        ));
+    transactions.add(transaction);
+  }
+
+  return transactions;
 }
 
 class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
     //print(data.toString());
-    print('REQUISIÇÃO');
+    /*print('REQUISIÇÃO');
     print('URL: ${data.url}');
     print('HEADERS: ${data.headers}');
-    print('BODY: ${data.body}');
+    print('BODY: ${data.body}');*/
     return data;
   }
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
     //print(data.toString());
-    print('RESPOSTA');
+    /*print('RESPOSTA');
     print('URL: ${data.body}');
-    print('STATUS CODE: ${data.statusCode}');
+    print('STATUS CODE: ${data.statusCode}');*/
     return data;
   }
 }
